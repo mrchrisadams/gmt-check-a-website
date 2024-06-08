@@ -12,6 +12,7 @@ services:
     image: greencoding/puppeteer-chrome
     setup-commands:
       - cp /tmp/repo/homepage-landing.js /var/www/homepage-landing.js
+      - cp /tmp/repo/package.json /var/www/package.json
 
     networks:
       - bakery-bench-green-coding-network
