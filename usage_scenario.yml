@@ -1,0 +1,31 @@
+---
+name: GMT with just a browser
+author: Chris Adams <chris@greenweb.org>
+version: 1
+description: A minimal Grene Metrics Tool usage file for testing an existing page. Intended to provide a teachable example for a tracking single user journey, before adding more precision as more components are brought into a system under test.
+
+sci:
+  R_d: page request
+
+services:
+  green-coding-puppeteer-container:
+    image: greencoding/puppeteer-chrome
+    setup-commands:
+      - cp /tmp/repo/homepage-landing.js /var/www/homepage-landing.js
+
+    networks:
+      - bakery-bench-green-coding-network
+
+flow:
+  - name: Homepage Landing
+    container: green-coding-puppeteer-container
+    commands:
+      - type: console
+        command: USAGE_SCENARIO_DOMAIN=https://wagtail.org/ node ./homepage-landing.js
+        shell: sh
+        log-stdout: True
+        read-sci-stdout: True
+        read-notes-stdout: True
+
+networks:
+  bakery-bench-green-coding-network:
