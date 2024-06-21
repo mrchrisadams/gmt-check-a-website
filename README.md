@@ -40,7 +40,7 @@ Let's break this down:
 
 Once you have a script running cleanly, and carrying out the interactions you want, you'd need a way to run it on a measurement cluster, and describe the scenario you want to run.
 
-With GMT, you do this with the `flow` section of a `usage_scenarion.yml` file. It should look something like this:
+With GMT, you do this with the `flow` section of a `usage_scenario.yml` file. It should look something like this:
 
 ```yaml
 
@@ -49,8 +49,9 @@ flow:
     container: green-coding-puppeteer-container
     commands:
       - type: console
-        # we are using the '>' here to make a multiline command easier to read 
-        # in yaml but be *run* as a single command on a single line
+        # we are using the '>' here to make a multiline command easier to read. 
+        # It would be run as a single command on a single line, like the one liner
+        # earlier in the readme.
         command: > 
             USAGE_SCENARIO_DOMAIN=https://wagtail.org/ 
             node ./homepage-landing.js
@@ -60,12 +61,17 @@ flow:
         read-notes-stdout: True
 ```
 
-Once this is in shape, you need to register this with your measurement cluster.
+Once this is in shape, you need to register this scenario with your chosen measurement cluster.
 
 You can do this with the node script below:
 
-```
+```shell
 node register-with-gmt.js
 
-// should return with { success: true }
+# should return with { success: true }
 ```
+
+### Help wanted / TODOs
+
+- Make the register-with-gmt.js script give more informative success / fail messages
+- Investigate the use of playright as an alternative to puppeteer (why? We get [better cross browser support](https://playwright.dev/python/docs/browsers), and [all the extra visual UI features that playright provides](https://playwright.dev/python/docs/debug#playwright-inspector), relatively easy [video recording](https://playwright.dev/python/docs/videos), and richer way to [inspect what a playright test run actually did with Traceviewer](https://playwright.dev/python/docs/trace-viewer))
